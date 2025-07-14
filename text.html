@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CageFlix - The Ultimate Nicolas Cage Collection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-title">CAGEFLIX</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Menu Toggle -->
+    <div class="menu-toggle" id="menuToggle">☰</div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-item" onclick="goHome()">Home</div>
+        <div class="sidebar-item" onclick="openAllMovies()">All Movies</div>
+        <div class="sidebar-item" onclick="openActorDetails()">Actor Details</div>
+    </div>
+
+    <!-- Main Page -->
+    <div class="main-page" id="mainPage">
+        <div class="logo-container">
+            <div class="logo-flip" id="logoFlip" onclick="showGenres()">
+                <div class="logo-front">CAGEFLIX</div>
+                <div class="logo-back"></div>
+            </div>
+        </div>
+
+        <!-- Genre Circles -->
+        <div class="genre-circles" id="genreCircles"></div>
+    </div>
+
+    <!-- Movie Page -->
+    <div class="movie-page" id="moviePage">
+        <div class="page-header">
+            <div class="page-title" id="genreTitle">Genre Movies</div>
+            <div class="close-btn" onclick="closeMoviePage()">×</div>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-box" id="genreSearch" placeholder="Search movies in this genre...">
+        </div>
+        <div class="movies-grid" id="moviesGrid"></div>
+    </div>
+
+    <!-- All Movies Page -->
+    <div class="all-movies-page" id="allMoviesPage">
+        <div class="page-header">
+            <div class="page-title">All Nicolas Cage Movies</div>
+            <div class="close-btn" onclick="closeAllMovies()">×</div>
+        </div>
+        
+        <!-- Search Container -->
+        <div class="search-container">
+            <input type="text" class="search-box" id="allMoviesSearch" placeholder="Search by title, genre, co-stars...">
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <!-- Time Period Filter -->
+            <div class="filter-row">
+                <div class="filter-group">
+                    <div class="filter-label">Time Period</div>
+                    <div class="time-filter-buttons" id="timeFilterButtons">
+                        <button class="time-filter-btn active" data-period="all" onclick="setTimePeriodFilter('all')">All Years</button>
+                        <button class="time-filter-btn" data-period="1980s" onclick="setTimePeriodFilter('1980s')">1980s</button>
+                        <button class="time-filter-btn" data-period="1990s" onclick="setTimePeriodFilter('1990s')">1990s</button>
+                        <button class="time-filter-btn" data-period="2000s" onclick="setTimePeriodFilter('2000s')">2000s</button>
+                        <button class="time-filter-btn" data-period="2010s" onclick="setTimePeriodFilter('2010s')">2010s</button>
+                        <button class="time-filter-btn" data-period="2020s" onclick="setTimePeriodFilter('2020s')">2020s</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label">Rating</div>
+                    <div class="rating-filter">
+                        <input type="range" class="rating-slider" id="ratingSlider" min="0" max="10" step="0.1" value="0">
+                        <span class="rating-display" id="ratingDisplay">0+ ⭐</span>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-label">Sort By</div>
+                    <div class="sort-filter">
+                        <select id="sortSelect">
+                            <option value="year-desc">Year (Newest First)</option>
+                            <option value="year-asc">Year (Oldest First)</option>
+                            <option value="title-asc">Title (A-Z)</option>
+                            <option value="title-desc">Title (Z-A)</option>
+                            <option value="rating-desc">Rating (Highest First)</option>
+                            <option value="rating-asc">Rating (Lowest First)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <button class="clear-filters-btn" onclick="clearAllFilters()">Clear All Filters</button>
+                </div>
+            </div>
+
+            <!-- Genre Filter -->
+            <div class="filter-row">
+                <div class="filter-group">
+                    <div class="filter-label">Genre</div>
+                    <div class="genre-filter-buttons" id="genreFilterButtons">
+                        <!-- Genre buttons will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Counter -->
+        <div class="results-counter" id="resultsCounter">
+            Showing all movies
+        </div>
+
+        <div class="movies-grid" id="allMoviesGrid"></div>
+    </div>
+
+    <!-- Movie Details Page -->
+    <div class="movie-details-page" id="movieDetailsPage">
+        <div class="page-header">
+            <div class="page-title" id="movieDetailsTitle">Movie Details</div>
+            <div class="close-btn" onclick="closeMovieDetails()">×</div>
+        </div>
+        <div class="movie-details-content" id="movieDetailsContent">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Actor Details Page -->
+    <div class="actor-details-page" id="actorDetailsPage">
+        <div class="page-header">
+            <div class="page-title">Nicolas Cage - Actor Details</div>
+            <div class="close-btn" onclick="closeActorDetails()">×</div>
+        </div>
+        <div class="actor-info">
+            <h2>Nicolas Kim Coppola (Nicolas Cage)</h2>
+            <p><strong>Born:</strong> January 7, 1964 (Long Beach, California)</p>
+            <p><strong>Career Span:</strong> 1981 - Present</p>
+            <p><strong>Notable Family:</strong> Nephew of Francis Ford Coppola, cousin of Sofia Coppola</p>
+            <p><strong>Known For:</strong> Intense performances, method acting, versatility across genres</p>
+            
+            <div class="actor-stats">
+                <div class="stat-card">
+                    <div class="stat-number">142+</div>
+                    <div class="stat-label">Films & TV Shows</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">43</div>
+                    <div class="stat-label">Years Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Genres Mastered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Academy Award</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="awards-section">
+            <h3>Major Awards & Nominations:</h3>
+            <div class="awards-list">
+                <div class="award-item">
+                    <div class="award-title">Academy Award Winner (1996)</div>
+                    <p>Best Actor - "Leaving Las Vegas"</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Golden Globe Winner (1996)</div>
+                    <p>Best Actor - Motion Picture Drama - "Leaving Las Vegas"</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Screen Actors Guild Award (1996)</div>
+                    <p>Outstanding Performance by a Male Actor - "Leaving Las Vegas"</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">MTV Movie Award (1997)</div>
+                    <p>Best Male Performance - "The Rock"</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Saturn Award (Multiple)</div>
+                    <p>Best Actor for "Face/Off" (1998), "Ghost Rider" (2007)</p>
+                </div>
+                <div class="award-item">
+                    <div class="award-title">Teen Choice Award (2000)</div>
+                    <p>Choice Movie Actor - "Gone in 60 Seconds"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Javascript.js"></script>
+</body>
+</html>
